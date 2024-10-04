@@ -91,6 +91,8 @@ int main()
 int insertSortedLL(LinkedList *ll, int item)
 {
 	/* add your code here */
+	printf(1);
+	return 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
