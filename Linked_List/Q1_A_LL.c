@@ -91,8 +91,38 @@ int main()
 int insertSortedLL(LinkedList *ll, int item)
 {
 	/* add your code here */
-	printf(1);
-	return 1;
+	int index = 0;
+
+	// temp를 헤드로 설정 
+	ListNode *temp = ll->head;
+
+	// 링크드리스트가 null인지 확인 null이면 -1리턴 
+	if (temp == NULL || item < temp->item) {
+		insertNode(ll, index, item);
+		return index;
+	}
+
+	if (temp->item == item){
+		return -1;
+	}
+
+	// ListNode *temp = (ListNode *)malloc(sizeof(ListNode));
+
+	// 인덱스 0부터 순회하면서 temp와 기존 노드 비교-> 노드가 Null이 아니고 temp의 값보다 큰경우까지
+	while(temp->next != NULL && temp->next->item < item){
+		temp = temp->next;
+		index++;
+	}
+	index++;
+
+	// 만약 next의 item이 입력값과 같으면 return 
+	if(temp->next != NULL && temp->next->item == item){
+		return -1;
+	}
+
+	insertNode(ll, index, item);
+
+	return index;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
