@@ -102,7 +102,41 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	int size = ll->size;
+
+	ListNode* slow = ll->head;
+    ListNode* fast = ll->head;
+	ListNode *temp;
+
+	// slow는 한 번, fast는 두 번 이동하여 중간 노드를 찾음
+    while (fast != NULL && fast->next != NULL) {
+		temp = slow;
+		slow = slow->next;       // 1칸 이동
+        fast = fast->next->next; // 2칸 이동
+    }
+
+	if(size % 2 == 1){
+		printf("이동 전 frontlist head의 포인터 주소 : %p\n", resultFrontList->head);
+		resultFrontList->head = ll->head;
+		printf("이동 후 frontlist head의 포인터 주소 : %p\n", ll->head);
+		ll->head = NULL;
+		resultBackList->head = slow->next;
+		printf("resultback head의 포인터 주소 : %p\n", resultBackList->head);
+
+		slow->next = NULL;
+	} 
+	else 
+	{
+		printf("이동 전 frontlist head의 포인터 주소 : %p\n", resultFrontList->head);
+		resultFrontList->head = ll->head;
+		printf("이동 후 frontlist head의 포인터 주소 : %p\n", ll->head);
+		ll->head = NULL;
+		resultBackList->head = temp->next;
+		printf("resultback head의 포인터 주소 : %p\n", resultBackList->head);
+
+		temp->next = NULL;
+		}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
