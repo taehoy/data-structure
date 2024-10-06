@@ -108,33 +108,27 @@ void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, Linke
     ListNode* fast = ll->head;
 	ListNode *temp;
 
-	// slow는 한 번, fast는 두 번 이동하여 중간 노드를 찾음
+	// temp는 짝수일때 slow 이전 노드를 가리킴, slow는 한 번, fast는 두 번 이동하여 중간 노드를 찾음
     while (fast != NULL && fast->next != NULL) {
-		temp = slow;
+		temp = slow; // 이동하기 전의 slow
 		slow = slow->next;       // 1칸 이동
         fast = fast->next->next; // 2칸 이동
     }
 
+	// 홀수일 경우
 	if(size % 2 == 1){
-		printf("이동 전 frontlist head의 포인터 주소 : %p\n", resultFrontList->head);
-		resultFrontList->head = ll->head;
-		printf("이동 후 frontlist head의 포인터 주소 : %p\n", ll->head);
-		ll->head = NULL;
-		resultBackList->head = slow->next;
-		printf("resultback head의 포인터 주소 : %p\n", resultBackList->head);
-
-		slow->next = NULL;
+		resultFrontList->head = ll->head; // front리스트를 ll의 head를 가리킴
+		ll->head = NULL; // ll의 head를 해제
+		resultBackList->head = slow->next; // back리스트를 slow와 연결
+		slow->next = NULL; // slow의 next를 해제
 	} 
+	// 짝수일 경우
 	else 
 	{
-		printf("이동 전 frontlist head의 포인터 주소 : %p\n", resultFrontList->head);
-		resultFrontList->head = ll->head;
-		printf("이동 후 frontlist head의 포인터 주소 : %p\n", ll->head);
-		ll->head = NULL;
-		resultBackList->head = temp->next;
-		printf("resultback head의 포인터 주소 : %p\n", resultBackList->head);
-
-		temp->next = NULL;
+		resultFrontList->head = ll->head; // front리스트를 ll의 head를 가리킴
+		ll->head = NULL; // ll의 head 해제
+		resultBackList->head = temp->next; // back리스트를 slow의 이전(temp)과 연결
+		temp->next = NULL; // slow의 이전 노드에서 해제
 		}
 
 }
