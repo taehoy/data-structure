@@ -34,7 +34,7 @@ void removeAllItems(LinkedList *ll);
 ListNode * findNode(LinkedList *ll, int index);
 int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
-
+int getIndexByNode(ListNode *head, ListNode *node);
 
 //////////////////////////// main() //////////////////////////////////////////////
 
@@ -89,9 +89,74 @@ int main()
 int moveMaxToFront(ListNode **ptrHead)
 {
     /* add your code here */
+	if((*ptrHead) == NULL){
+		return -1;
+	}
+
+	ListNode *cur = (*ptrHead); // 첫번째 노드
+	ListNode *maxNode = cur; // 최대값을 담은 노드 포인터 (초기화 : head)
+	ListNode *temp = NULL; // maxNode 이전 노드
+
+	while(cur->next != NULL){
+		if(maxNode->item < cur->next->item){
+			temp = cur;
+			maxNode = cur->next;
+		}
+		cur = cur->next;
+	}
+
+	// 최대값이 첫번째일 경우 
+	if(maxNode == *ptrHead){
+		printf("%c\n", 'a');
+		return 0;
+	}
+
+	// maxNode가 맨 뒤일 경우, maxNode->next = NULL
+	if(maxNode->next == NULL){
+		// maxNode의 다음을 첫번째 헤드 주소로 변경
+		maxNode->next = *ptrHead;
+		// maxNode를 head로 지정
+		*ptrHead = maxNode;
+		// maxNode의 이전 노드의 next를 NULL로 지정
+		temp->next = NULL;
+	} 
+	// maxNode가 중간일 경우
+	else {
+		// maxNode의 이전 노드의 next를 maxNode의 next값으로 변경
+		temp->next = maxNode->next;
+		// maxNode의 다음을 첫번쨰 헤드 주소로 변경
+		maxNode->next = *ptrHead;
+		// maxNode를 head로 지정
+		*ptrHead = maxNode;
+	}
+
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+
+int getIndexByNode(ListNode *head, ListNode *node){
+	printf("%d\n", 1111);
+
+	if (head == NULL){
+		return -1;
+	}
+
+	int index = 0; // 반환할 인덱스
+	ListNode *cur; // 현재 위치 노드
+	cur = head;
+
+	while(cur->next != NULL){
+		// 입력한 노드가 갖고 있는 주소와 cur->next의 주소가 같으면 같은 노드임.
+		if(cur->next == node){
+			return index+1;
+		}
+		cur = cur->next;
+		index++;
+	}
+
+	return index;
+}
 
 void printList(LinkedList *ll){
 
