@@ -87,6 +87,25 @@ int main()
 void moveOddItemsToBack(LinkedList *ll)
 {
 	/* add your code here */
+
+	if (ll->size <=1){
+		return;
+	}
+
+	ListNode *cur = ll->head;
+	int size = ll->size;
+	int index = 0;
+
+	for (int i = 0; i < size; i++){
+		if(cur->item % 2 == 1){ // 홀수인 경우
+			insertNode(ll, size, cur->item); // 리스트의 마지막 인덱스에 해당 노드 추가
+			cur = cur->next; // 현재 노드 위치를 다음 노드로 이동
+			removeNode(ll, index); // 현재 노드 제거 
+		} else { // 짝수인 경우
+			cur = cur->next; // 현재 노드 위치를 다음 노드로 이동
+			index++; // 인덱스 증가 -> 제거할 홀수 노드의 인덱스 지정
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
