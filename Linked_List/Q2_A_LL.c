@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 2 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -104,6 +105,70 @@ int main()
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
     /* add your code here */
+	ListNode *prev, *tmp;
+
+	// 둘다 비어있다
+	if(ll1->size == 0 && ll2->size == 0){
+		return;
+	}
+
+	//ll1이 비어있고 ll2는 비어있지 않다
+	if(ll1->size == 0 && ll2->size != 0){
+		if (ll2->head == NULL) {
+			return;
+		}
+		ll1->head = ll2->head;
+		ll2->head = NULL;
+		printf("%c\n", 'A');
+		return;
+	}
+	
+	// ll2는 비어있고 ll1은 비어있지 않다
+	if(ll2->size == 0 && ll1->size != 0){
+		return;
+	}
+	// 둘다 비어있지 않다
+
+	prev = ll1->head;
+	
+	// 사이즈가 1, 1이면 ?
+	if(prev->next == NULL){
+		tmp = findNode(ll2, 0);
+		ll2->head = tmp->next;
+		tmp->next = prev->next;
+		prev->next = tmp;
+		printf("%d\n", 50505050);
+		return;
+	} 
+	int index = 0;
+
+	// 사이즈가 2,1이면?
+	if(prev->next != NULL && (tmp = findNode(ll2,index))->next == NULL){
+		tmp->next = prev->next;
+		prev->next = tmp;
+		ll2->head = NULL;
+		
+		return;
+	}
+
+	printf("첫번째 리스트의 처음 값: %d\n", prev->item);
+	while(prev->next != NULL && (tmp=findNode(ll2, 0))->next !=NULL){
+		ll2->head = tmp->next;
+		tmp->next = prev->next;
+		prev->next = tmp;
+		prev = tmp->next;
+		index++;
+	}
+
+	ListNode *tmp2 = (ListNode *)malloc(sizeof(ListNode));
+
+	tmp = findNode(ll2, 0);
+
+	ll2->head = tmp->next;
+	tmp->next = prev->next;
+	prev->next = tmp;
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
