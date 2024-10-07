@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 7 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MIN_INT -1000
 
@@ -104,7 +105,56 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	/* add your code here */
+	// 리턴값이 1이면 밸런스x , 0이면 밸런스o
+	int size = sizeof(expression);
+	Stack *stack;
+	stack->ll.head = NULL;
+
+	char openChars[] = "({["; // 괄호 여는 문자들
+	char closeChars[] = ")}]"; // 닫는 괄호 문자들
+
+	// 처음부터 닫는 괄호면 무조건 매칭 x
+	if(strchr(openChars,expression[0]) == NULL ){
+		return 1;
+	}
+
+	// 첫 문자 push
+	printf("%s\n", "여기가 처음");
+	push(stack, openChars[0]);
+	printf("%s\n", "첫문자 성공"); 
+
+	// 두번째 문자부터 매칭 시작
+	for (int i = 1; i < size; i++){
+		char c = expression[i]; // 입력받은 문자
+		printf("비교 문자 : %c\n", c);
+
+		// 여는 문자인 경우 푸쉬
+		if(strchr(openChars, c) != NULL){
+			push(stack,c);
+			continue;
+		} 
+		// 닫는 문자인 경우, 스택에서 peek한 값과 매칭
+		else {
+			// 매칭이 되면 pop
+			char peekC = peek(stack); // peek Char
+			if((c == ')' && peekC == '(') ||(c == '}' && peekC == '{') || (c == ']' && peekC == '[') ){ // 입력 문자와 Peek Char 비교, 
+				pop(stack); // 같으면 pop -> 열린 문자와 매칭되었으므로
+				printf("매칭여부 : %c\n", 't');
+				continue;
+			}
+			// 매칭이 안되면 break -> 매칭 x;
+			else {
+				return 1;
+			}
+		}
+	}
+	
+	if(isEmptyStack(stack)){
+		return 0;
+	} else {
+		return 1;
+	}
 }
 
 ////////////////////////////////////////////////////////////
