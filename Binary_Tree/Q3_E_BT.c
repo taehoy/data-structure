@@ -44,6 +44,9 @@ BTNode* pop(Stack *stack);
 void printTree(BTNode *node);
 void removeAll(BTNode **node);
 
+#define MAX(a, b) ((a) >= (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
 ///////////////////////////// main() /////////////////////////////////////////////
 
 int main()
@@ -102,6 +105,26 @@ int countOneChildNodes(BTNode *node)
 
 {
     /* add your code here */
+    if(node == NULL){
+        return -1;
+    }
+
+    // 자식 노드 둘다 없음
+    if(node->left == NULL && node->right == NULL){
+        return 0;
+    } 
+    
+    // 자식 노드 중 왼쪽 노드만 있고 그것이 리프노드 일때 +1
+    if(node->right == NULL && node->left != NULL && node->left->left == NULL && node->left->right == NULL ){
+        return 1;
+    }
+
+    // 자식 노드 중 오른쪽 노드만 있고 그것이 리프노드 일때 +1
+    if(node->left == NULL && node->right != NULL && node->right->left == NULL && node->right->left == NULL){
+        return 1;
+    }
+
+    return countOneChildNodes(node->left) + countOneChildNodes(node->right);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
