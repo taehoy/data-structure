@@ -46,6 +46,9 @@ BTNode* pop(Stack *stack);
 void printTree(BTNode *node);
 void removeAll(BTNode **node);
 
+#define MAX(a,b) ((a) >= (b) ? (a) : (b))
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+
 ///////////////////////////// main() /////////////////////////////////////////////
 
 int main()
@@ -103,6 +106,19 @@ int main()
 int smallestValue(BTNode *node)
 {
 	/* add your code here */
+    if(node == NULL){
+        return __INT_MAX__;
+    }
+
+    if(node->left == NULL && node->right == NULL){
+        return node->item;
+    }
+
+    int min = __INT_MAX__;
+    min = MIN(min, smallestValue(node->left));
+    min = MIN(min, smallestValue(node->right));
+
+    return min;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
