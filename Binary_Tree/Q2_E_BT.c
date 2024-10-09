@@ -41,6 +41,9 @@ BTNode* pop(Stack *stk);
 void printTree(BTNode *node);
 void removeAll(BTNode **node);
 
+#define MAX(a,b) ((a) >= (b) ? (a) : (b))
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+
 ///////////////////////////// main() /////////////////////////////////////////////
 
 int main()
@@ -98,6 +101,25 @@ int maxHeight(BTNode *node)
 
 {
     /* add your code here */
+    if(node == NULL){
+        return -1;
+    }
+    // 최대값 변수 설정
+    int maxCount = 0;
+
+    if(node->left == NULL && node->right == NULL){
+        return 0;
+    }
+    
+    if (node->left != NULL)
+    {
+        maxCount = (maxCount, maxHeight(node->left)+1);
+    }
+    if(node -> right != NULL){
+        maxCount = (maxCount, maxHeight(node->right)+1);
+    }
+
+    return maxCount;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
