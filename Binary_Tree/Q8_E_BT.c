@@ -46,6 +46,9 @@ BTNode* pop(Stack *stack);
 void printTree(BTNode *node);
 void removeAll(BTNode **node);
 
+#define MAX(a,b) ((a) >= (b) ? (a) : (b))
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+
 ///////////////////////////// main() /////////////////////////////////////////////
 
 int main()
@@ -103,6 +106,19 @@ int main()
 int hasGreatGrandchild(BTNode *node)
 {
 	/* add your code here */
+    /* add your code here */
+    if(node == NULL){
+        return -1;
+    }
+    // 최대값 변수 설정
+    int left = hasGreatGrandchild(node->left);
+    int right = hasGreatGrandchild(node->right);
+
+    if(left >= 2 || right >= 2){
+        printf("%d\n", node->item);
+    }
+
+    return MAX(left,right)+1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
